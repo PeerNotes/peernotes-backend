@@ -1,0 +1,47 @@
+{
+  "name": "peernotes-backend",
+  "version": "1.0.0",
+  "description": "[PRIVATE] backend for peernotes.net",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "start::raw": "ts-node src/index.ts",
+    "start": "node dist/src/index.js",
+    "build": "tsc",
+    "test::watch": "tsc --watch",
+    "test": "ts-node __tests__/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeerNotes/peernotes-backend.git"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.7",
+    "@semantic-release/npm": "^7.0.5",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.36",
+    "@types/node": "^14.6.2",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
+    "semantic-release": "^17.1.1",
+    "typescript": "^3.9.7"
+  },
+  "author": "Zaid Arshad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PeerNotes/peernotes-backend/issues"
+  },
+  "homepage": "https://github.com/PeerNotes/peernotes-backend#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.2",
+    "nanoid": "^3.1.12"
+  }
+}

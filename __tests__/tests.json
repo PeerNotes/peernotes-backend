@@ -1,0 +1,9 @@
+{
+    "tests": [
+        {
+            "name": "Logger",
+            "path": "LoggerTest.ts",
+            "description": "Logging utility."
+        }
+    ]
+}
