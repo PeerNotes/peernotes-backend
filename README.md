@@ -1,2 +1,5 @@
 # peernotes-backend
-[PRIVATE] backend for peernotes.net
+
+backend for peernotes.net
+
+dis shiz is unlicensed so pls no yoink
