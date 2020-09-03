@@ -5,11 +5,12 @@ class Logger {
         throw new Error("This class is not constructable and is only populated with static methods");
     }
     static base(type: string, value: string, color: string) {
-        return console.log(
+        console.log(
             color,
             `[${new Date().toLocaleTimeString()}|${new Date().toLocaleDateString()}] [PEERNOTES] [${type}] ${value}`,
-            colors.RESET,
+            colors.RESET
         );
+        return `[${new Date().toLocaleTimeString()}|${new Date().toLocaleDateString()}] [PEERNOTES] [${type}] ${value}`;
     }
     static log(value: string) {
         return Logger.base("INFO", value, colors.GREEN);

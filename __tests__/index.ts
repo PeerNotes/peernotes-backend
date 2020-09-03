@@ -1,12 +1,38 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { tests } = require("./tests.json");
+import { expect } from "chai";
+import Logger from "../src/util/Logger";
+import { JWTUtil, IdUtil } from "../src/util/StructureUtil";
 
-for (const test of tests) {
-    try {
-        console.log(`Running Test ${test.name}...\n`);
-        require(`./${test.path}`);
-        console.log("\x1b[32m", `[✅] Test ${test.name} succeeded.\n`, "\x1b[0m");
-    } catch (e) {
-        console.log("\x1b[31m", `[❌] Test ${test.name} failed. Reason: ${e.message}\n`, "\x1b[0m");
-    }
-}
+const JWTtestID = "thisisatestid";
+const JWTtestKey = "thisisatestkey";
+
+describe("Utilities", async () => {
+    describe("IDGeneration", async () => {
+        it("Generate ID", async () => {
+            return expect(await IdUtil.create()).to.be.an("string");
+        });
+    });
+
+    describe("JWTUtil", async () => {
+        it("Generate JWT", async () => {
+            const JWTClass = new JWTUtil(JWTtestKey);
+            return expect(await JWTClass.create(JWTtestID)).to.be.an("string");
+        });
+        it("Deconstruct JWT", async () => {
+            const JWTClass = new JWTUtil(JWTtestKey);
+            const JWT = await JWTClass.create(JWTtestID);
+            return expect((await JWTClass.decode(JWT)).id).to.be.equal(JWTtestID);
+        });
+    });
+
+    describe("Logger", async () => {
+        it("Info", async () => {
+            return expect(Logger.log("Info Test")).to.be.an("string");
+        });
+        it("Warn", async () => {
+            return expect(Logger.log("Warn Test")).to.be.an("string");
+        });
+        it("Error", async () => {
+            return expect(Logger.log("Error Test")).to.be.an("string");
+        });
+    });
+});

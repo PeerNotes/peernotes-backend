@@ -3,35 +3,32 @@ import jwt from "jsonwebtoken";
 import { promisify } from "util";
 const sign = promisify(jwt.sign);
 const verify = promisify(jwt.verify);
-const decode = promisify(jwt.decode);
 
 class IdUtil {
     constructor() {
         throw new Error("This class is not constructable and is only populated with static methods");
     }
-    static create() {
+    static create(): Promise<string> {
         return nanoid();
     }
 }
 
 class JWTUtil {
-    constructor() {
-        throw new Error("This class is not constructable and is only populated with static methods");
+    private _key: string;
+    constructor(key: string) {
+        this._key = key;
     }
-    static async create(id: string, key: string) {
-        return sign(
+    async create(id: string): Promise<any> {
+        return await sign(
             {
                 id: id,
                 exp: Math.floor(Date.now() / 1000) + 60 * 180,
             },
-            key,
+            this._key
         );
     }
-    static verify(jwt: string, key: string) {
-        return verify(jwt, key);
-    }
-    static deconstruct(jwt: string, key: string) {
-        return JWTUtil.verify(jwt, key) ? decode(jwt, {}) : null;
+    async decode(jwt: string): Promise<any> {
+        return verify(jwt, this._key);
     }
 }
 export { IdUtil, JWTUtil };

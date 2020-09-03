@@ -1,0 +1,42 @@
+## TO:DO;
+
+This page will have **all** tasks required to be done before release of v1.0.0 of the API
+
+-   Create full detailed models for:
+    -   Images [X]
+    -   Lists [X]
+    -   Notes [X]
+    -   Users [X]
+-   Create CRUD (Create, Read, Update, Delete) HTTP Routes for:
+    -   Users
+    -   Notes
+    -   Images
+    -   Lists
+-   Create CRUD DatabaseManager instances for:
+    -   Users [X]
+    -   Notes [X]
+    -   Images [X]
+    -   Lists [X]
+-   Interfaces for ALL JSON returns from the API
+-   Controllers for:
+    -   Images
+        -   Retrieve Image
+    -   Lists
+        -   Create List
+        -   Retrieve List
+        -   Edit List details
+        -   Edit Notes of List
+        -   Delete List
+    -   Notes
+        -   Create Note
+        -   Retrieve Note
+        -   Edit Note details
+        -   Edit Images of Note
+        -   Delete Note
+    -   Users
+        -   @me
+            -   Edit Details
+            -   Create Notes
+            -   Create Lists
+        -   other users
+            -   Retrieve User

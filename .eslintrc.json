@@ -1,4 +1,5 @@
 {
+    "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 6,
@@ -16,7 +17,12 @@
         "prefer-template": "warn",
         "camelcase": "warn"
     },
-    "overrides": [{
-        "files": ["*.js", "*.ts"]
-    }]
+    "overrides": [
+        {
+            "files": [
+                "*.js",
+                "*.ts"
+            ]
+        }
+    ]
 }
