@@ -1,5 +1,5 @@
 export default interface PartialUser {
     id: string;
-    display_name: string;
+    displayName: string;
     username: string;
 }

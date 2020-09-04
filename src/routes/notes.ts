@@ -1,7 +1,7 @@
 import { Router } from "express";
 import RouteValidator from "../util/RouteValidator";
-import NotFound from "../errors/NotFound";
-import { RetriveNote, DeleteNote } from "../controllers/NoteController";
+import NotFound from "../responses/NotFound";
+import { RetriveNote, DeleteNote, UpdateNote, CreateNote } from "../controllers/NoteController";
 const notes = new Router();
 
 notes.use("/:nanoid", async (req, res, next) => {
@@ -11,6 +11,6 @@ notes.use("/:nanoid", async (req, res, next) => {
     return next();
 });
 
-notes.route("/:nanoid").get(RetriveNote).delete(DeleteNote);
+notes.route("/:nanoid").get(RetriveNote).delete(DeleteNote).put(UpdateNote).post(CreateNote);
 
 export default notes;

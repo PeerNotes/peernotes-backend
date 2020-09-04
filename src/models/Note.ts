@@ -2,7 +2,10 @@ import { Schema, model } from "mongoose";
 import { IdUtil } from "../util/StructureUtil";
 
 const Note = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+    },
     nanoid: {
         type: String,
         default: async () => {
@@ -10,7 +13,10 @@ const Note = new Schema({
         },
         immutable: true,
     },
-    description: String,
+    description: {
+        type: String,
+        required: true,
+    },
     createdDate: {
         type: Date,
         immutable: true,
@@ -20,10 +26,12 @@ const Note = new Schema({
         id: {
             type: String,
             immutable: true,
+            required: true,
         },
         username: {
             type: String,
             immutable: true,
+            required: true,
         },
     },
     images: Map,

@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import BadRequest from "../errors/BadRequest";
+import BadRequest from "../responses/BadRequest";
 
 export default function (...validations) {
     return async (req, res, next) => {

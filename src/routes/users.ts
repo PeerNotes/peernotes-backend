@@ -3,7 +3,7 @@ import { UserSignUp, UserSignIn } from "../controllers/UserAccountInteraction";
 import PersonalUserController from "../controllers/PersonalUserController";
 import { body } from "express-validator";
 import RouteValidator from "../util/RouteValidator";
-import BadRequest from "../errors/BadRequest";
+import BadRequest from "../responses/BadRequest";
 const users = new Router();
 
 users.post("/signin", UserSignIn);

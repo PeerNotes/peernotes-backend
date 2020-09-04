@@ -38,34 +38,35 @@ app.get("/", async (req, res) => {
     });
 });
 
-import NotFound from "./errors/NotFound";
-import BadRequest from "./errors/BadRequest";
-import NotFoundErrorNonGlobalInterface from "./interfaces/NotFoundErrorNonGlobal";
-import NotFoundErrorGlobalInterface from "./interfaces/NotFoundErrorGlobal";
-import BadRequestErrorInterface from "./interfaces/BadRequestError";
+import NotFound from "./responses/NotFound";
+import BadRequest from "./responses/BadRequest";
+import NotFoundErrorNonGlobal from "./interfaces/NotFoundErrorNonGlobal";
+import NotFoundErrorGlobal from "./interfaces/NotFoundErrorGlobal";
+import BadRequestError from "./interfaces/BadRequestError";
+import { ResponseCodes } from "./responses/ResponseCodes";
 
 app.use(async (err, req, res, next) => {
     if (process.env.NODE_ENV !== "production") console.log(err);
 
     switch (err.constructor) {
         case NotFound: {
-            const response: NotFoundErrorNonGlobalInterface = {
+            const response: NotFoundErrorNonGlobal = {
                 error: true,
                 message: "That resource does not exist",
                 description: err.description ? err.description : null,
                 global: false,
             };
-            return res.status(404).json(response);
+            return res.status(ResponseCodes.NOTFOUND).json(response);
         }
         case BadRequest: {
-            const response: BadRequestErrorInterface = {
+            const response: BadRequestError = {
                 error: true,
                 message: "Bad Request.",
                 field: err.field,
                 value: err.value,
                 description: err.description,
             };
-            return res.status(400).json(response);
+            return res.status(ResponseCodes.BAD_REQUEST).json(response);
         }
     }
 
@@ -73,12 +74,12 @@ app.use(async (err, req, res, next) => {
 });
 
 app.use("*", async (req, res) => {
-    const response: NotFoundErrorGlobalInterface = {
+    const response: NotFoundErrorGlobal = {
         error: true,
         message: "That resource does not exist",
         global: true,
     };
-    return res.status(404).json(response);
+    return res.status(ResponseCodes.NOTFOUND).json(response);
 });
 
 app.listen(config.port, "0.0.0.0", async () => {

@@ -73,9 +73,9 @@ class SafeUser {
     public email: string;
     public nanoid: string;
     public username: string;
-    public display_name: string;
-    public first_name: string;
-    public last_name: string;
+    public displayName: string;
+    public firstName: string;
+    public lastName: string;
     public oauth: string;
     public bio: string;
     public createdDate: Date;
@@ -85,9 +85,9 @@ class SafeUser {
         this.email = data.email;
         this.nanoid = data.email;
         this.username = data.username;
-        this.display_name = data.username;
-        this.first_name = data.first__name;
-        this.last_name = data.last_name;
+        this.displayName = data.displayName;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
         this.oauth = data.oauth;
         this.bio = data.bio;
         this.createdDate = data.createdDate;
