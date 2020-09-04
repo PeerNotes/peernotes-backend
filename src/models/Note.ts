@@ -1,5 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import { IdUtil } from "../util/StructureUtil";
+import AuthorData from "../interfaces/AuthorData";
+
+export interface INote extends Document {
+    name: string;
+    nanoid: string;
+    description: string;
+    createdDate: Date;
+    author: AuthorData;
+    images: Map<string, Record<string, string>>;
+}
 
 const Note = new Schema({
     name: {
@@ -8,10 +18,6 @@ const Note = new Schema({
     },
     nanoid: {
         type: String,
-        default: async () => {
-            return await IdUtil.create();
-        },
-        immutable: true,
     },
     description: {
         type: String,
@@ -41,6 +47,12 @@ Note.methods.toSafeObject = function () {
     return new SafeNote(this);
 };
 
+Note.pre<INote>("save", async function () {
+    if (this.nanoid == null) {
+        this.nanoid = await IdUtil.create();
+    }
+});
+
 export default model("Note", Note);
 
 class SafeNote {
@@ -58,15 +70,12 @@ class SafeNote {
         this.createdDate = new Date(data.createdDate);
         this.author = data.author;
         this.images = new Map();
-        for (const image of data.images) {
-            this.images.set(image.id, image);
+        if (data.images) {
+            for (const image of data.images) {
+                this.images.set(image.id, image);
+            }
         }
     }
-}
-
-interface AuthorData {
-    id: string;
-    displayName: string;
 }
 
 export { SafeNote };

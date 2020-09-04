@@ -12,7 +12,7 @@ async function RetriveNote(req, res, next) {
 
     const response: NoteResponse = {
         error: false,
-        note: req.data.note,
+        note: req.data.note.toSafeObject(),
     };
     return res.status(ResponseCodes.OK).json(response);
 }
@@ -58,6 +58,10 @@ async function CreateNote(req, res, next) {
         const TempNote = new req.app.database.note({
             name: name,
             description: description,
+            author: {
+                id: "test",
+                username: "test",
+            },
         });
 
         const CreatedNote = await TempNote.save();

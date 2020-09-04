@@ -5,12 +5,13 @@ import { RetriveNote, DeleteNote, UpdateNote, CreateNote } from "../controllers/
 const notes = new Router();
 
 notes.use("/:nanoid", async (req, res, next) => {
-    const Note = await req.app.database.notes.findOne({ nanoid: req.params.nanoid });
+    const Note = await req.app.database.note.findOne({ nanoid: req.params.nanoid });
     if (!Note) return next(new NotFound("A Note with that ID was not Found"));
     req.data.note = Note;
     return next();
 });
 
-notes.route("/:nanoid").get(RetriveNote).delete(DeleteNote).put(UpdateNote).post(CreateNote);
+notes.post("/", CreateNote);
+notes.route("/:nanoid").get(RetriveNote).delete(DeleteNote).put(UpdateNote);
 
 export default notes;

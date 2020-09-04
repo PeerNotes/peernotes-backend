@@ -12,20 +12,19 @@ async function RetrieveList(req, res, next) {
 
     const response: ListRetrieveResponse = {
         error: false,
-        list: req.data.list,
+        list: req.data.list.toSafeObject(),
     };
     return res.status(ResponseCodes.OK).json(response);
 }
 
 async function DeleteList(req, res, next) {
     if (!req.data.list) return next(new NotFound("list to delete was not found."));
-
     try {
-        req.app.database.lists.deleteOne({ nanoid: req.data.list._id });
+        await req.app.database.list.findByIdAndDelete({ _id: req.data.list._id });
 
         const response: ListDeletionResponse = {
             error: false,
-            message: "list Queued for Deletion.",
+            message: "List queued for Deletion.",
         };
         return res.status(ResponseCodes.ACCEPTED).json(response);
     } catch (e) {
@@ -34,7 +33,7 @@ async function DeleteList(req, res, next) {
 }
 
 async function UpdateList(req, res, next) {
-    req.data.list = req.data.list ? req.data.list : await req.app.database.lists.findOne({ nanoid: req.params.nanoid });
+    req.data.list = req.data.list ? req.data.list : await req.app.database.list.findOne({ nanoid: req.params.nanoid });
 
     if (!req.data.list) return next(new NotFound("list to update was not found."));
 
@@ -58,6 +57,10 @@ async function CreateList(req, res, next) {
         const Templist = new req.app.database.list({
             name: name,
             description: description,
+            author: {
+                id: "test",
+                username: "test1",
+            },
         });
 
         const Createdlist = await Templist.save();

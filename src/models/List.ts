@@ -1,19 +1,34 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import { IdUtil } from "../util/StructureUtil";
+import AuthorData from "../interfaces/AuthorData";
+
+export interface IList extends Document {
+    name: string;
+    nanoid: string;
+    description: string;
+    createdDate: Date;
+    author: string;
+    images: Map<string, Record<string, string>>;
+}
 
 const List = new Schema({
     name: String,
     nanoid: {
         type: String,
-        default: async () => {
-            return await IdUtil.create();
-        },
     },
     description: String,
     createdDate: Date,
     author: {
-        id: String,
-        displayName: String,
+        id: {
+            type: String,
+            immutable: true,
+            required: true,
+        },
+        username: {
+            type: String,
+            immutable: true,
+            required: true,
+        },
     },
     notes: Map,
 });
@@ -21,6 +36,12 @@ const List = new Schema({
 List.methods.toSafeObject = function () {
     return new SafeList(this);
 };
+
+List.pre<IList>("save", async function () {
+    if (this.nanoid == null) {
+        this.nanoid = await IdUtil.create();
+    }
+});
 
 class SafeList {
     public name: string;
@@ -37,15 +58,12 @@ class SafeList {
         this.createdDate = new Date(data.createdDate);
         this.author = data.author;
         this.notes = new Map();
-        for (const image of data.images) {
-            this.notes.set(image.id, image);
+        if (data.notes) {
+            for (const note of data.notes) {
+                this.notes.set(note.id, note);
+            }
         }
     }
-}
-
-interface AuthorData {
-    id: string;
-    displayName: string;
 }
 
 export default model("List", List);

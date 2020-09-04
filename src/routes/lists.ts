@@ -10,6 +10,7 @@ lists.use("/:nanoid", async (req, res, next) => {
     return next();
 });
 
-lists.route("/:nanoid").get(RetrieveList).delete(DeleteList).put(UpdateList).post(CreateList);
+lists.post("/", CreateList);
+lists.route("/:nanoid").get(RetrieveList).delete(DeleteList).put(UpdateList);
 
 export default lists;

@@ -12,7 +12,7 @@ export default class DatabaseManager {
     public image: typeof Image;
 
     constructor(databaseURI: any) {
-        console.log(databaseURI);
+        mongoose.set("useCreateIndex", true);
         mongoose.connect(databaseURI, {
             useNewUrlParser: true,
             useFindAndModify: false,

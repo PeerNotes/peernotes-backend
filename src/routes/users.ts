@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { UserSignUp, UserSignIn } from "../controllers/UserAccountInteraction";
+import { UserSignUp } from "../controllers/UserController";
 import PersonalUserController from "../controllers/PersonalUserController";
 import { body } from "express-validator";
 import RouteValidator from "../util/RouteValidator";
 import BadRequest from "../responses/BadRequest";
 const users = new Router();
 
-users.post("/signin", UserSignIn);
+//users.post("/signin", UserSignIn);
 users.post(
     "/signup",
     [

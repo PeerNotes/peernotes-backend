@@ -24,11 +24,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 
 const api = new express.Router();
+api.use(async (req, res, next) => {
+    req.data = {};
+    return next();
+});
 import * as routes from "./routes/index";
 for (const route in routes) {
     api.use(`/${route}`, routes[route]);
 }
-
 app.use(`/api/v${app.details.version.charAt(0)}`, api);
 
 app.get("/", async (req, res) => {
@@ -53,7 +56,7 @@ app.use(async (err, req, res, next) => {
             const response: NotFoundErrorNonGlobal = {
                 error: true,
                 message: "That resource does not exist",
-                description: err.description ? err.description : null,
+                description: err.message ? err.message : null,
                 global: false,
             };
             return res.status(ResponseCodes.NOTFOUND).json(response);
@@ -67,6 +70,13 @@ app.use(async (err, req, res, next) => {
                 description: err.description,
             };
             return res.status(ResponseCodes.BAD_REQUEST).json(response);
+        }
+        default: {
+            const response = {
+                error: true,
+                message: "An Internal Server Error Occured.",
+            };
+            return res.status(ResponseCodes.INTERNAL).json(response);
         }
     }
 
